@@ -8,9 +8,9 @@
   <style>
     body {
       margin: 0;
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #fde2e4, #e0c3fc);
-      color: #333;
+      font-family: "Comic Sans MS", "Poppins", sans-serif;
+      background: linear-gradient(135deg, #ffd6e8, #dbeafe);
+      color: #444;
       overflow: hidden;
     }
 
@@ -25,6 +25,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      padding: 20px;
     }
 
     .page.active {
@@ -33,18 +34,19 @@
 
     h1 {
       font-size: 2.2rem;
-      margin-bottom: 20px;
+      margin: 15px 0;
     }
 
     button {
-      padding: 12px 26px;
+      padding: 12px 28px;
       font-size: 1rem;
       border-radius: 30px;
       border: none;
       cursor: pointer;
       margin: 10px;
-      background: #ffafcc;
+      background: #ffb3d9;
       color: #fff;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
       transition: transform 0.2s;
     }
 
@@ -52,40 +54,71 @@
       transform: scale(1.1);
     }
 
-    .floating {
-      position: absolute;
-    }
-
-    /* Page 1 */
-    .flowers {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    /* Page 2 */
+    /* DEFAULT IMAGE STYLING */
     img {
-      max-width: 300px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border-radius: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      margin-top: 15px;
     }
 
-    /* Page 3 */
+    /* BIG LEO IMAGE (PAGE 2 ONLY) */
+    #page2 img {
+      max-width: 90vw;
+      max-height: 65vh;
+    }
+
+    .decor {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
     .final {
       font-size: 2.5rem;
+      color: #ff69b4;
     }
 
     .message {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       margin-top: 15px;
+    }
+
+    /* FLOATING SANRIO VIBES */
+    .float {
+      position: absolute;
+      animation: floatUp 8s linear infinite;
+      opacity: 0.7;
+      font-size: 1.5rem;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-10vh);
+      }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- FLOATING DECORATIONS -->
+  <script>
+    const icons = ["💖","⭐","🎀","💗","🌸"];
+    for (let i = 0; i < 20; i++) {
+      const span = document.createElement("span");
+      span.className = "float";
+      span.innerText = icons[Math.floor(Math.random() * icons.length)];
+      span.style.left = Math.random() * 100 + "vw";
+      span.style.animationDuration = (6 + Math.random() * 6) + "s";
+      document.body.appendChild(span);
+    }
+  </script>
+
   <!-- PAGE 1 -->
   <div class="page active" id="page1">
-    <div class="flowers">🌸 💕 🌸</div>
+    <div class="decor">🌸 🎀 💕 🌸</div>
     <h1>Is it a cutie’s birthday?<br>Is she turning 25? 🎂</h1>
 
     <div>
@@ -96,16 +129,18 @@
 
   <!-- PAGE 2 -->
   <div class="page" id="page2">
-    <img src="https://i.imgur.com/1KegWPz.jpg" alt="Leo Meme" />
-    <h1>Don’t turn 25.<br>You are so sexy 😎</h1>
+    <img src="leo.png" alt="Leo Meme" />
+    <h1>Nooo don’t turn 25,<br>you’re so sexy 😎</h1>
     <button id="shutBtn">Shut Up, I am 25!</button>
   </div>
 
   <!-- PAGE 3 -->
   <div class="page" id="page3">
     <div class="final">🎉 Happy 25th Birthday Elisa 💖</div>
-    <div class="message">Happy Birthday Cutie!<br>I love You 💕</div>
-    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" />
+    <div class="message">
+      Happy Birthday Cutie!<br>I love You 💕
+    </div>
+    <img src="https://media.tenor.com/yellow-pochacco.gif" alt="Pochacco Birthday Gif" />
   </div>
 
   <script>
@@ -114,27 +149,23 @@
       document.getElementById("page" + page).classList.add("active");
     }
 
-    // NO button flies away
+    // NO button escapes
     const noBtn = document.getElementById("noBtn");
     noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 150);
-      const y = Math.random() * (window.innerHeight - 60);
       noBtn.style.position = "absolute";
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+      noBtn.style.left = Math.random() * (window.innerWidth - 150) + "px";
+      noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
     });
 
-    // Shut Up button dodges but eventually allows click
+    // Shut Up button dodges a bit
     const shutBtn = document.getElementById("shutBtn");
     let tries = 0;
 
     shutBtn.addEventListener("mouseover", () => {
       if (tries < 3) {
-        const x = Math.random() * (window.innerWidth - 200);
-        const y = Math.random() * (window.innerHeight - 100);
         shutBtn.style.position = "absolute";
-        shutBtn.style.left = x + "px";
-        shutBtn.style.top = y + "px";
+        shutBtn.style.left = Math.random() * (window.innerWidth - 200) + "px";
+        shutBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
         tries++;
       }
     });
